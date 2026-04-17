@@ -115,7 +115,7 @@ export default function App() {
           {/* Accessibility Modal */}
           {showAccess && (
             <div
-              className="absolute inset-0 bg-black/50 z-[100] flex items-end justify-center backdrop-blur-sm modal-backdrop"
+              className="absolute inset-0 bg-black/60 z-[100] flex items-end justify-center modal-backdrop"
               onClick={(e) => e.target === e.currentTarget && setShowAccess(false)}
             >
               <div className="bg-[var(--card)] w-full p-6 rounded-t-[30px] shadow-2xl max-h-[85%] overflow-y-auto modal-sheet">
