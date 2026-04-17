@@ -1,0 +1,152 @@
+export const dictionary = {
+  en: {
+    // Navigation & Settings
+    tab_journey: 'Roadmap',
+    tab_discover: 'Swipe',
+    tab_connect: 'Bridge',
+    tab_faq: 'FAQ',
+    tab_impact: 'Impact',
+    settings: 'Settings & Accessibility',
+    high_contrast: 'High Contrast',
+    dyslexic_font: 'Dyslexic Font',
+    font_size: 'Font Size',
+    font_size_normal: 'Normal',
+    font_size_large: 'Large',
+    font_size_xlarge: 'Extra Large',
+    settings_colorblind: 'Colorblind Filters',
+    cb_none: 'None',
+    cb_protanopia: 'Protanopia (Red-Blind)',
+    cb_deuteranopia: 'Deuteranopia (Green-Blind)',
+    cb_tritanopia: 'Tritanopia (Blue-Blind)',
+    cb_achromatopsia: 'Achromatopsia (Monochromacy)',
+    settings_language: 'Language',
+    settings_age_group: 'Demo Mode (Age)',
+    age_under16: 'Under 16 (Free)',
+    age_16plus: '16+ (Premium)',
+    settings_consent: 'Data Processing Consent',
+    consent_not_set: 'Not set',
+    consent_under16_label: 'Parental Consent Granted',
+    consent_over16_label: 'User Consent Granted',
+    consent_reset: 'Reset Consent',
+    reset_defaults: 'Reset Settings',
+
+    // Swipe Screen
+    swipe_title: 'Discover Skills',
+    swipe_subtitle: 'Swipe right on what you like, left on what you don\'t.',
+    swipe_streak: 'Day Streak',
+    swipe_progress: 'Question {current} of {total}',
+    swipe_teaching_label: 'Learning Style',
+    cat_Vocational: 'Vocational',
+    cat_Pedagogical: 'Pedagogical',
+    cat_Lifestyle: 'Lifestyle',
+    roadmap_level: 'Level',
+
+    // Bridge Screen
+    bridge_senior_title: "Your Pathways",
+    bridge_senior_sub: "Data-driven matches for your future",
+    bridge_junior_title: "Your Skill Themes",
+    bridge_junior_sub: "What your swipes say about you so far",
+    premium_unlocked: "Premium Unlocked",
+    eligible_grant: "Eligible for TUL Tech Grant",
+    grant_amount: "Estimated 10,000 CZK / semester",
+    generate_cv: "Generate 1-Click Regional CV",
+    
+    // FAQ & Consent Screen (THE MISSING KEYS)
+    faq_consent_title: 'Data Privacy Check',
+    faq_consent_body: 'To provide accurate regional matches, Sofia processes some personal preferences. Are you over 16?',
+    faq_consent_over16: 'Yes, I am 16+',
+    faq_consent_under16: 'No, I am under 16',
+    faq_title: 'FAQ & Community',
+    faq_subtitle: 'Get answers about your future',
+    faq_school_mode: 'School-Led Mode Active (Reduced Tracking)',
+    faq_gdpr_title: 'GDPR & Privacy',
+    faq_gdpr_body: 'Your data is anonymized and securely stored in EU servers. You have the right to request deletion at any time.',
+    faq_delete_data: 'Request Data Deletion',
+    faq_tos_title: 'Terms of Service',
+    faq_tos_body: 'By using Sofia, you agree to our educational use terms. We never sell data to third parties.',
+    faq_identity_hidden: 'Your identity is hidden when asking questions.',
+    faq_recently_answered: 'Recently Answered',
+    faq_anonymous: 'Anonymous Student',
+    faq_alumni: 'Verified Alumni / Mentor',
+    faq_ask_placeholder: 'Ask a question...'
+  },
+  cz: {
+    // Navigation & Settings
+    tab_journey: 'Cesta',
+    tab_discover: 'Objevuj',
+    tab_connect: 'Most',
+    tab_faq: 'FAQ',
+    tab_impact: 'Dopad',
+    settings: 'Nastavení a Přístupnost',
+    high_contrast: 'Vysoký kontrast',
+    dyslexic_font: 'Písmo pro dyslektiky',
+    font_size: 'Velikost písma',
+    font_size_normal: 'Normální',
+    font_size_large: 'Velké',
+    font_size_xlarge: 'Extra velké',
+    settings_colorblind: 'Filtry barvosleposti',
+    cb_none: 'Žádný',
+    cb_protanopia: 'Protanopie (červená)',
+    cb_deuteranopia: 'Deuteranopie (zelená)',
+    cb_tritanopia: 'Tritanopie (modrá)',
+    cb_achromatopsia: 'Achromatopsie (černobílá)',
+    settings_language: 'Jazyk',
+    settings_age_group: 'Demo Režim (Věk)',
+    age_under16: 'Méně než 16 (Zdarma)',
+    age_16plus: '16+ (Premium)',
+    settings_consent: 'Souhlas se zpracováním dat',
+    consent_not_set: 'Nenastaveno',
+    consent_under16_label: 'Souhlas rodičů udělen',
+    consent_over16_label: 'Souhlas uživatele udělen',
+    consent_reset: 'Resetovat souhlas',
+    reset_defaults: 'Resetovat nastavení',
+
+    // Swipe Screen
+    swipe_title: 'Objevuj dovednosti',
+    swipe_subtitle: 'Přejeď vpravo, pokud se ti to líbí, vlevo pokud ne.',
+    swipe_streak: 'Dní v řadě',
+    swipe_progress: 'Otázka {current} z {total}',
+    swipe_teaching_label: 'Styl učení',
+    cat_Vocational: 'Odborné',
+    cat_Pedagogical: 'Pedagogické',
+    cat_Lifestyle: 'Životní styl',
+    roadmap_level: 'Úroveň',
+
+    // Bridge Screen
+    bridge_senior_title: "Tvé cesty",
+    bridge_senior_sub: "Shody pro tvou budoucnost podle dat",
+    bridge_junior_title: "Tvá témata dovedností",
+    bridge_junior_sub: "Co o tobě zatím říkají tvé volby",
+    premium_unlocked: "Premium odemčeno",
+    eligible_grant: "Nárok na technologický grant TUL",
+    grant_amount: "Odhadem 10 000 Kč / semestr",
+    generate_cv: "Vygenerovat regionální životopis",
+
+    // FAQ & Consent Screen (THE MISSING KEYS)
+    faq_consent_title: 'Kontrola ochrany dat',
+    faq_consent_body: 'Pro poskytnutí přesných regionálních shod Sofia zpracovává některé osobní preference. Je vám více než 16 let?',
+    faq_consent_over16: 'Ano, je mi 16+',
+    faq_consent_under16: 'Ne, je mi méně než 16',
+    faq_title: 'Časté dotazy a komunita',
+    faq_subtitle: 'Získejte odpovědi o své budoucnosti',
+    faq_school_mode: 'Aktivní školní režim (omezené sledování)',
+    faq_gdpr_title: 'GDPR a soukromí',
+    faq_gdpr_body: 'Vaše data jsou anonymizována a bezpečně uložena na serverech v EU. Máte právo kdykoli požádat o smazání.',
+    faq_delete_data: 'Požádat o smazání dat',
+    faq_tos_title: 'Podmínky použití',
+    faq_tos_body: 'Používáním Sofie souhlasíte s našimi podmínkami pro vzdělávací účely. Nikdy neprodáváme data třetím stranám.',
+    faq_identity_hidden: 'Vaše identita je při kladení otázek skryta.',
+    faq_recently_answered: 'Nedávno zodpovězeno',
+    faq_anonymous: 'Anonymní student',
+    faq_alumni: 'Ověřený absolvent / Mentor',
+    faq_ask_placeholder: 'Položte otázku...'
+  }
+};
+
+export function t(lang, key, params = {}) {
+  let str = dictionary[lang]?.[key] || dictionary['en'][key] || key;
+  Object.keys(params).forEach(p => {
+    str = str.replace(`{${p}}`, params[p]);
+  });
+  return str;
+}

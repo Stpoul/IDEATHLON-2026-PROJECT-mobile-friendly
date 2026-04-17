@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #6c5ce7;
+  --background: #f9f9f9;
+  --foreground: #333333;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --muted-foreground: #64748b;
+  --success: #10B981;
+  --danger: #ef4444;
+  --font-base: 16px;
+}
+
+html { font-size: var(--font-base); transition: font-size 0.2s ease-in-out; }
+
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card: #1e293b;
+  --border: #334155;
+  --muted-foreground: #cbd5e1;
+  --primary: #a29bfe;
+}
+
+.high-contrast {
+  --background: #020617 !important;
+  --foreground: #ffffff !important;
+  --card: #0f172a !important;
+  --border: #38bdf8 !important; 
+  --primary: #38bdf8 !important;
+  --muted-foreground: #ffffff !important;
+  --success: #4ade80 !important;
+  --danger: #f87171 !important;
+}
+
+.high-contrast * { border-color: var(--border) !important; box-shadow: none !important; }
+
+.font-dyslexic, .font-dyslexic * {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
+  line-height: 1.6 !important;
+}
+
+.filter-protanopia { filter: url('#protanopia'); }
+.filter-deuteranopia { filter: url('#deuteranopia'); }
+.filter-tritanopia { filter: url('#tritanopia'); }
+.filter-achromatopsia { filter: url('#achromatopsia'); }
+
+.text-size-normal { --font-base: 16px; }
+.text-size-large { --font-base: 20px; }
+.text-size-xlarge { --font-base: 24px; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--foreground);
+  background-color: var(--background);
+  transition: background-color 0.3s, color 0.3s;
+
+  /* Native app feel */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Allow text selection in content areas */
+p, h1, h2, h3, span, label, li, td, th {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Smooth momentum scrolling on iOS */
+.overflow-y-auto, main {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+.screen-enter { animation: slideUp 0.3s ease-out both; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
