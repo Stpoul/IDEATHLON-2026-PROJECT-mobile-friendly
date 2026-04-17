@@ -80,5 +80,32 @@ p, h1, h2, h3, span, label, li, td, th {
   overscroll-behavior-y: contain;
 }
 
-.screen-enter { animation: slideUp 0.3s ease-out both; }
-@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+/* GPU-accelerated scroll container */
+.gpu-scroll {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  transform: translateZ(0);
+  will-change: scroll-position;
+}
+
+/* Screen enter animation — triggered by key change on tab switch */
+.screen-enter {
+  animation: screenSlideIn 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+@keyframes screenSlideIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.99); }
+  to   { opacity: 1; transform: translateY(0)  scale(1);    }
+}
+
+/* Modal sheet slide-up */
+.modal-backdrop { animation: fadeIn 0.2s ease both; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-sheet { animation: sheetUp 0.28s cubic-bezier(0.32, 0.72, 0, 1) both; }
+@keyframes sheetUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0);    }
+}
+
+/* Snappy button press feel */
+button { touch-action: manipulation; }

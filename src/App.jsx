@@ -27,21 +27,25 @@ const CB_OPTIONS = [
   { value: 'achromatopsia', labelKey: 'cb_achromatopsia' },
 ];
 
+const CB_FILTER = {
+  protanopia:    "url('#protanopia')",
+  deuteranopia:  "url('#deuteranopia')",
+  tritanopia:    "url('#tritanopia')",
+  achromatopsia: "url('#achromatopsia')",
+};
+
 export default function App() {
   const [activeTab, setActiveTab] = useState('roadmap');
   const [showAccess, setShowAccess] = useState(false);
 
-  // Gamification
   const [xp, setXp] = useState(340);
   const [streak, setStreak] = useState(5);
 
-  // EU Winner Edition state
   const [language, setLanguage] = useState('en');
   const [hasConsent, setHasConsent] = useState(null);
   const [swipeResults, setSwipeResults] = useState({});
   const [ageGroup, setAgeGroup] = useState('under16');
 
-  // Accessibility
   const [darkMode, setDarkMode] = useState(false);
   const [highContrast, setHighContrast] = useState(false);
   const [dyslexic, setDyslexic] = useState(false);
@@ -60,23 +64,28 @@ export default function App() {
 
   const { Screen: ActiveScreen } = TABS.find(tab => tab.id === activeTab);
 
+  // Non-colorblind classes only — colorblind filter is applied via inline style on the container
+  // (browser cannot resolve url('#id') filters when set on an ancestor element of the SVG)
   useEffect(() => {
     const classes = [
       darkMode ? 'dark' : '',
       highContrast ? 'high-contrast' : '',
       dyslexic ? 'font-dyslexic' : '',
-      cb !== 'none' ? `filter-${cb}` : '',
       `text-size-${textSize}`,
     ].filter(Boolean);
     document.documentElement.className = classes.join(' ');
-  }, [darkMode, highContrast, dyslexic, textSize, cb]);
+  }, [darkMode, highContrast, dyslexic, textSize]);
 
   return (
     <>
+      {/* SVG filter defs rendered BEFORE the container that applies them */}
       <ColorblindSVGs />
 
       <div className="bg-slate-200 flex items-center justify-center min-h-[100dvh]">
-        <div className="relative w-full max-w-[448px] h-[100dvh] md:h-[90vh] md:max-h-[800px] mx-auto flex flex-col overflow-hidden bg-[var(--background)] shadow-2xl md:rounded-[40px] text-[var(--foreground)] transition-all">
+        <div
+          className="relative w-full max-w-[448px] h-[100dvh] md:h-[90vh] md:max-h-[800px] mx-auto flex flex-col overflow-hidden bg-[var(--background)] shadow-2xl md:rounded-[40px] text-[var(--foreground)] transition-colors duration-300"
+          style={{ filter: CB_FILTER[cb] || undefined }}
+        >
 
           {/* Header Bar */}
           <header
@@ -85,7 +94,7 @@ export default function App() {
           >
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className="p-2.5 bg-[var(--background)] rounded-full shadow border border-[var(--border)] active:scale-95 transition-transform"
+              className="p-2.5 bg-[var(--background)] rounded-full shadow border border-[var(--border)] active:scale-90 transition-transform duration-150"
             >
               {darkMode ? <Sun size={20} className="text-amber-500" /> : <Moon size={20} className="text-[var(--muted-foreground)]" />}
             </button>
@@ -97,7 +106,7 @@ export default function App() {
 
             <button
               onClick={() => setShowAccess(true)}
-              className="p-2.5 bg-[var(--primary)] text-white rounded-full shadow active:scale-95 transition-transform"
+              className="p-2.5 bg-[var(--primary)] text-white rounded-full shadow active:scale-90 transition-transform duration-150"
             >
               <UniversalAccessIcon />
             </button>
@@ -105,23 +114,27 @@ export default function App() {
 
           {/* Accessibility Modal */}
           {showAccess && (
-            <div className="absolute inset-0 bg-black/50 z-[100] flex items-end justify-center backdrop-blur-sm">
-              <div className="bg-[var(--card)] w-full p-6 rounded-t-[30px] shadow-2xl max-h-[85%] overflow-y-auto">
+            <div
+              className="absolute inset-0 bg-black/50 z-[100] flex items-end justify-center backdrop-blur-sm modal-backdrop"
+              onClick={(e) => e.target === e.currentTarget && setShowAccess(false)}
+            >
+              <div className="bg-[var(--card)] w-full p-6 rounded-t-[30px] shadow-2xl max-h-[85%] overflow-y-auto modal-sheet">
+                <div className="w-10 h-1 bg-[var(--border)] rounded-full mx-auto mb-5" />
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-xl font-bold">{t(language, 'settings')}</h2>
-                  <button onClick={() => setShowAccess(false)} className="p-2"><X /></button>
+                  <button onClick={() => setShowAccess(false)} className="p-2 rounded-full active:scale-90 transition-transform"><X /></button>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 mb-6">
-                  <button onClick={() => setHighContrast(!highContrast)} className={`p-4 rounded-xl border-2 font-bold text-xs ${activeCls(highContrast)}`}>{t(language, 'high_contrast')}</button>
-                  <button onClick={() => setDyslexic(!dyslexic)} className={`p-4 rounded-xl border-2 font-bold text-xs ${activeCls(dyslexic)}`}>{t(language, 'dyslexic_font')}</button>
+                  <button onClick={() => setHighContrast(!highContrast)} className={`p-4 rounded-xl border-2 font-bold text-xs active:scale-95 transition-transform ${activeCls(highContrast)}`}>{t(language, 'high_contrast')}</button>
+                  <button onClick={() => setDyslexic(!dyslexic)} className={`p-4 rounded-xl border-2 font-bold text-xs active:scale-95 transition-transform ${activeCls(dyslexic)}`}>{t(language, 'dyslexic_font')}</button>
                 </div>
 
                 <div className="mb-6">
                   <h3 className="text-[10px] font-bold uppercase text-[var(--muted-foreground)] mb-3">{t(language, 'font_size')}</h3>
                   <div className="flex gap-2">
                     {[{ key: 'normal', label: 'font_size_normal' }, { key: 'large', label: 'font_size_large' }, { key: 'xlarge', label: 'font_size_xlarge' }].map(({ key, label }) => (
-                      <button key={key} onClick={() => setTextSize(key)} className={`flex-1 py-3 rounded-xl border-2 font-bold text-xs ${activeCls(textSize === key)}`}>{t(language, label)}</button>
+                      <button key={key} onClick={() => setTextSize(key)} className={`flex-1 py-3 rounded-xl border-2 font-bold text-xs active:scale-95 transition-transform ${activeCls(textSize === key)}`}>{t(language, label)}</button>
                     ))}
                   </div>
                 </div>
@@ -130,7 +143,7 @@ export default function App() {
                   <h3 className="text-[10px] font-bold uppercase text-[var(--muted-foreground)] mb-3">{t(language, 'settings_colorblind')}</h3>
                   <div className="flex gap-1.5 flex-wrap">
                     {CB_OPTIONS.map(({ value, labelKey }) => (
-                      <button key={value} onClick={() => setCb(value)} className={`px-3 py-2 rounded-xl border-2 font-bold text-xs ${activeCls(cb === value)}`}>{t(language, labelKey)}</button>
+                      <button key={value} onClick={() => setCb(value)} className={`px-3 py-2 rounded-xl border-2 font-bold text-xs active:scale-95 transition-transform ${activeCls(cb === value)}`}>{t(language, labelKey)}</button>
                     ))}
                   </div>
                 </div>
@@ -139,7 +152,7 @@ export default function App() {
                   <h3 className="text-[10px] font-bold uppercase text-[var(--muted-foreground)] mb-3">{t(language, 'settings_language')}</h3>
                   <div className="flex gap-2">
                     {['en', 'cz'].map(lang => (
-                      <button key={lang} onClick={() => setLanguage(lang)} className={`flex-1 py-3 rounded-xl border-2 font-bold text-xs uppercase ${activeCls(language === lang)}`}>{lang}</button>
+                      <button key={lang} onClick={() => setLanguage(lang)} className={`flex-1 py-3 rounded-xl border-2 font-bold text-xs uppercase active:scale-95 transition-transform ${activeCls(language === lang)}`}>{lang}</button>
                     ))}
                   </div>
                 </div>
@@ -147,13 +160,12 @@ export default function App() {
                 <div className="mb-6">
                   <h3 className="text-[10px] font-bold uppercase text-[var(--muted-foreground)] mb-3">{t(language, 'settings_age_group')}</h3>
                   <div className="flex gap-2">
-                    {[ { value: 'under16', labelKey: 'age_under16' }, { value: '16plus', labelKey: 'age_16plus' }].map(({ value, labelKey }) => (
-                      <button key={value} onClick={() => setAgeGroup(value)} className={`flex-1 py-3 rounded-xl border-2 font-bold text-xs ${activeCls(ageGroup === value)}`}>{t(language, labelKey)}</button>
+                    {[{ value: 'under16', labelKey: 'age_under16' }, { value: '16plus', labelKey: 'age_16plus' }].map(({ value, labelKey }) => (
+                      <button key={value} onClick={() => setAgeGroup(value)} className={`flex-1 py-3 rounded-xl border-2 font-bold text-xs active:scale-95 transition-transform ${activeCls(ageGroup === value)}`}>{t(language, labelKey)}</button>
                     ))}
                   </div>
                 </div>
 
-                {/* --- THIS WAS THE MISSING BLOCK --- */}
                 <div className="mb-6">
                   <h3 className="text-[10px] font-bold uppercase text-[var(--muted-foreground)] mb-3">{t(language, 'settings_consent')}</h3>
                   <div className="bg-[var(--background)] rounded-xl px-4 py-3 text-xs text-[var(--muted-foreground)] mb-2 border border-[var(--border)]">
@@ -166,36 +178,41 @@ export default function App() {
                   {hasConsent !== null && (
                     <button
                       onClick={() => setHasConsent(null)}
-                      className="w-full py-3 border-2 border-[var(--border)] text-[var(--muted-foreground)] font-bold text-xs rounded-xl active:scale-95 transition-all"
+                      className="w-full py-3 border-2 border-[var(--border)] text-[var(--muted-foreground)] font-bold text-xs rounded-xl active:scale-95 transition-transform"
                     >
                       {t(language, 'consent_reset')}
                     </button>
                   )}
                 </div>
-                {/* ---------------------------------- */}
 
-                <button onClick={() => { setDarkMode(false); setHighContrast(false); setDyslexic(false); setTextSize('normal'); setCb('none'); }} className="w-full py-4 border-2 border-red-100 text-red-500 font-bold rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all">
+                <button
+                  onClick={() => { setDarkMode(false); setHighContrast(false); setDyslexic(false); setTextSize('normal'); setCb('none'); }}
+                  className="w-full py-4 border-2 border-red-100 text-red-500 font-bold rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                >
                   <RotateCcw size={18} /> {t(language, 'reset_defaults')}
                 </button>
               </div>
             </div>
           )}
 
-          <main className="flex-1 overflow-y-auto">
-            <ActiveScreen
-              onNavigate={setActiveTab}
-              globalXp={xp}
-              globalStreak={streak}
-              language={language}
-              hasConsent={hasConsent}
-              onConsent={setHasConsent}
-              swipeResults={swipeResults}
-              onSwipeResult={handleSwipeResult}
-              ageGroup={ageGroup}
-              setXp={setXp}
-              onAddXp={handleAddXp}
-              onResetXp={handleResetXp}
-            />
+          {/* key prop forces re-animation on every tab switch */}
+          <main className="flex-1 overflow-y-auto gpu-scroll">
+            <div key={activeTab} className="screen-enter h-full">
+              <ActiveScreen
+                onNavigate={setActiveTab}
+                globalXp={xp}
+                globalStreak={streak}
+                language={language}
+                hasConsent={hasConsent}
+                onConsent={setHasConsent}
+                swipeResults={swipeResults}
+                onSwipeResult={handleSwipeResult}
+                ageGroup={ageGroup}
+                setXp={setXp}
+                onAddXp={handleAddXp}
+                onResetXp={handleResetXp}
+              />
+            </div>
           </main>
 
           <nav
@@ -205,9 +222,14 @@ export default function App() {
             <ul className="flex">
               {TABS.map(({ id, key, Icon }) => (
                 <li key={id} className="flex-1">
-                  <button onClick={() => setActiveTab(id)} className="w-full flex flex-col items-center gap-1 py-3 transition-all duration-150 active:scale-95">
-                    <Icon size={22} className={activeTab === id ? 'text-[var(--primary)]' : 'text-[var(--muted-foreground)]'} />
-                    <span className={`text-[10px] font-semibold ${activeTab === id ? 'text-[var(--primary)]' : 'text-[var(--muted-foreground)]'}`}>{t(language, key)}</span>
+                  <button
+                    onClick={() => setActiveTab(id)}
+                    className="w-full flex flex-col items-center gap-1 py-3 active:scale-90 transition-transform duration-150"
+                  >
+                    <Icon size={22} className={`transition-colors duration-200 ${activeTab === id ? 'text-[var(--primary)]' : 'text-[var(--muted-foreground)]'}`} />
+                    <span className={`text-[10px] font-semibold transition-colors duration-200 ${activeTab === id ? 'text-[var(--primary)]' : 'text-[var(--muted-foreground)]'}`}>
+                      {t(language, key)}
+                    </span>
                   </button>
                 </li>
               ))}
